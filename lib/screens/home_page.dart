@@ -1,9 +1,13 @@
 import 'package:accounts/components/transaction_widget.dart';
 import 'package:accounts/screens/add_new_transaction.dart';
 import 'package:accounts/screens/all_transactions_screen.dart';
+import 'package:accounts/screens/login_screen.dart';
 import 'package:accounts/screens/profile.dart';
 import 'package:accounts/screens/statistics.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,6 +19,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final auth = FirebaseAuth.instance;
+    final db = FirebaseFirestore.instance;
+
+    DateTime dateToday =new DateTime.now();
+    String date = dateToday.toString().substring(0,10);
+
+    String email = auth.currentUser!.email!;
+
     int _selectedIndex = 0;
     void _onItemTapped(int index) {
       if (index == 0) {
@@ -41,27 +53,54 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 15.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                            child: Text("Monday 9 \nNovember",
+                    child: Row(children: [
+                      Expanded(
+                          child: Text(date,
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w400))),
+                      FutureBuilder(
+                        future: db
+                            .collection("user_email_to_username")
+                            .doc(email)
+                            .get(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return Text(snapshot.data!['user_name'],
                                 style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400))),
-                        Text("Vishnu",
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w400)),
-                      ],
-                    ),
+                                    fontSize: 18, fontWeight: FontWeight.w400));
+                          } else {
+                            return Text("Loading",
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w400));
+                          }
+                        },
+                      ),
+                    ]),
                   ),
                   Divider(color: Colors.black),
                   SizedBox(height: 40),
                   Text("Account Balance",
                       style:
                           TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-                  Text("9400.0",
-                      style:
-                          TextStyle(fontSize: 40, fontWeight: FontWeight.w700)),
+                  FutureBuilder(
+                    future:  db
+                        .collection('net_expenses')
+                        .doc('balance')
+                        .get(),
+                    builder : (context, snapshot) {
+                      if(snapshot.hasData) {
+                        return Text(snapshot.data!['amount'].toString(),
+                            style:
+                            TextStyle(fontSize: 40,
+                                fontWeight: FontWeight.w700));
+                      }else{
+                        return Text('Loading..',
+                            style:
+                            TextStyle(fontSize: 40,
+                                fontWeight: FontWeight.w700));
+                      }
+                    }
+                  ),
                   SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -74,12 +113,24 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: Center(
-                          child: Text(
-                            "Income \n25000",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w800),
+                          child: FutureBuilder(
+                              future:  db
+                                  .collection('net_expenses')
+                                  .doc('income')
+                                  .get(),
+                              builder : (context, snapshot) {
+                                if(snapshot.hasData) {
+                                  return Text("Income \n"+snapshot.data!['amount'].toString(),
+                                      style:
+                                      TextStyle(fontSize: 20,
+                                          fontWeight: FontWeight.w800, color: Colors.white));
+                                }else{
+                                  return Text('Loading..',
+                                      style:
+                                      TextStyle(fontSize: 20,
+                                          fontWeight: FontWeight.w800, color: Colors.white));
+                                }
+                              }
                           ),
                         ),
                       ),
@@ -91,12 +142,24 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: Center(
-                          child: Text(
-                            "Expense \n11200",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w800),
+                          child: FutureBuilder(
+                              future:  db
+                                  .collection('net_expenses')
+                                  .doc('expense')
+                                  .get(),
+                              builder : (context, snapshot) {
+                                if(snapshot.hasData) {
+                                  return Text("Expense \n"+snapshot.data!['amount'].toString(),
+                                      style:
+                                      TextStyle(fontSize: 20,
+                                          fontWeight: FontWeight.w800, color: Colors.white));
+                                }else{
+                                  return Text('Loading..',
+                                      style:
+                                      TextStyle(fontSize: 20,
+                                          fontWeight: FontWeight.w800, color: Colors.white));
+                                }
+                              }
                           ),
                         ),
                       ),
@@ -112,7 +175,7 @@ class _HomePageState extends State<HomePage> {
                 width: 30,
               ),
               Expanded(
-                child: Text("Recent Transactions",
+                child: Text("Today's Transactions",
                     style:
                         TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
               ),
@@ -137,15 +200,37 @@ class _HomePageState extends State<HomePage> {
             child: MediaQuery.removePadding(
               context: context,
               removeTop: true,
-              child: ListView(
-                children: [
-                  Transaction1,
-                  Transaction2,
-                  Transaction3,
-                  Transaction1,
-                  Transaction2,
-                  Transaction3
-                ],
+              child: Material(
+                child: StreamBuilder(
+                  stream: FirebaseFirestore.instance.collection("transactions").where('date',isEqualTo: date).snapshots(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasError) {
+                      return Text('Something went wrong');
+                    }
+
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Text("Loading");
+                    }
+
+                    return ListView(
+                      children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                        Map<String, dynamic> data =
+                        document.data()! as Map<String, dynamic>;
+                        return GestureDetector(
+                          child: TransactionWidget(
+                            isIncrease: !data['is_spent'],
+                            specification: data['desc_short'],
+                            amount: data['amount'],
+                          ),
+                          onTap: (){
+
+                          }
+                        );
+                      }).toList(),
+                    );
+                  },
+                ),
               ),
             ),
           )

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:accounts/components/buttons.dart';
 import 'package:accounts/components/text_form_field.dart';
 import 'package:accounts/screens/home_page.dart';
+import 'package:accounts/components/firebase_functions.dart';
 
 TextEditingController userEmail = TextEditingController();
 TextEditingController userPassword = TextEditingController();
@@ -57,7 +58,7 @@ class _SignInPageState extends State<SignInPage> {
               child: Button(
                 text: "Login",
                 action: () async {
-                  //await signIn(userEmail.text, userPassword.text);
+                  await signIn(auth, userEmail.text, userPassword.text);
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => HomePage()));
                 },

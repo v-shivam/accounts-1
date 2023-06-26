@@ -3,7 +3,13 @@ import '../components/buttons.dart';
 import 'package:accounts/components/text_form_field.dart';
 import 'login_screen.dart';
 import 'package:accounts/screens/home_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:accounts/components/firebase_functions.dart';
 
+final auth = FirebaseAuth.instance;
+final db = FirebaseFirestore.instance;
 TextEditingController userEmail = TextEditingController();
 TextEditingController userPassword = TextEditingController();
 TextEditingController confirmUserPassword = TextEditingController();
@@ -84,7 +90,11 @@ class _SignUpPageState extends State<SignUpPage> {
               child: Button(
                 text: "Sign Up",
                 action: () async {
-                  // await signUp(userEmail.text, userPassword.text);
+                  final user = <String, dynamic>{
+                    "user_name": userName.text,
+                  };
+                  await db.collection('user_email_to_username').doc(userEmail.text).set(user);
+                  await signUp(auth, userEmail.text, userPassword.text);
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => HomePage()));
                 },
