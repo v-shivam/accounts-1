@@ -14,6 +14,8 @@ TextEditingController userEmail = TextEditingController();
 TextEditingController userPassword = TextEditingController();
 TextEditingController confirmUserPassword = TextEditingController();
 TextEditingController userName = TextEditingController();
+DateTime dateToday =new DateTime.now();
+String date = dateToday.toString().substring(0,10);
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -25,6 +27,7 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Color(0xFFFFF6E5),
       body: SingleChildScrollView(
@@ -85,20 +88,13 @@ class _SignUpPageState extends State<SignUpPage> {
             SizedBox(
               height: 30,
             ),
-            Hero(
-              tag: "SIGNUP",
-              child: Button(
-                text: "Sign Up",
-                action: () async {
-                  final user = <String, dynamic>{
-                    "user_name": userName.text,
-                  };
-                  await db.collection('user_email_to_username').doc(userEmail.text).set(user);
-                  await signUp(auth, userEmail.text, userPassword.text);
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => HomePage()));
-                },
-              ),
+            Button(
+              text: "Sign Up",
+              action: () async {
+                await signUp(auth, userEmail.text, userPassword.text);
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => HomePage()));
+              },
             ),
             SizedBox(height: 20.0),
             Row(

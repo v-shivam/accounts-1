@@ -4,6 +4,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:accounts/components/constants.dart';
 
 class StatisticsPage extends StatefulWidget {
   const StatisticsPage({super.key});
@@ -14,60 +15,132 @@ class StatisticsPage extends StatefulWidget {
 
 class _StatisticsPageState extends State<StatisticsPage> {
   @override
-  void initState() {
-
-    super.initState();
-    updateValueHelper();
-  }
-
   Widget build(BuildContext context) {
+    final auth = FirebaseAuth.instance;
+    String email = auth.currentUser!.email!;
     return Scaffold(
       backgroundColor: Color(0xFFFFF6E5),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 60, 20, 40),
+        padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
         child: Column(
           children: [
             Container(
-              height: 100,
+              height: 50,
               child: Text("Statistics",
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700)),
             ),
             Container(
-              height: 300,
-              child: PieChart(PieChartData(centerSpaceRadius: 10, sections: [
-                PieChartSectionData(
-                    value: categoryWiseExpense["Food"],
-                    color: Colors.purple,
-                    radius: 100),
-                PieChartSectionData(
-                    value: categoryWiseExpense["Transport"],
-                    color: Colors.amber,
-                    radius: 100),
-                PieChartSectionData(
-                    value: categoryWiseExpense["Personal"],
-                    color: Colors.green,
-                    radius: 100),
-                PieChartSectionData(
-                    value: categoryWiseExpense["Shopping"],
-                    color: Colors.red,
-                    radius: 100),
-                PieChartSectionData(
-                    value: categoryWiseExpense["Rent"],
-                    color: Colors.orange,
-                    radius: 100),
-                PieChartSectionData(
-                    value: categoryWiseExpense["Medical"],
-                    color: Colors.pink,
-                    radius: 100),
-                PieChartSectionData(
-                    value: categoryWiseExpense["Movie"],
-                    color: Colors.yellow,
-                    radius: 100),
-                PieChartSectionData(
-                    value: categoryWiseExpense["Salary"],
-                    color: Colors.blue,
-                    radius: 100)
-              ])),
+              height: 400,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  Container(
+                    width: 350,
+                    child: PieChart(PieChartData(centerSpaceRadius: 45, sections: [
+                      PieChartSectionData(
+                          value: categoryWiseExpense["Food"],
+                          color: Colors.purple,
+                          radius: 90,
+                          showTitle: false),
+                      PieChartSectionData(
+                          value: categoryWiseExpense["Transport"],
+                          color: Colors.amber,
+                          radius: 90,
+                          showTitle: false),
+                      PieChartSectionData(
+                          value: categoryWiseExpense["Personal"],
+                          color: Colors.green,
+                          radius: 90,
+                          showTitle: false),
+                      PieChartSectionData(
+                          value: categoryWiseExpense["Shopping"],
+                          color: Colors.red,
+                          radius: 90,
+                          showTitle: false),
+                      PieChartSectionData(
+                          value: categoryWiseExpense["Rent"],
+                          color: Colors.orange,
+                          radius: 90,
+                          showTitle: false),
+                      PieChartSectionData(
+                          value: categoryWiseExpense["Medical"],
+                          color: Colors.pink,
+                          radius: 90,
+                          showTitle: false),
+                      PieChartSectionData(
+                          value: categoryWiseExpense["Movie"],
+                          color: Colors.yellow,
+                          radius: 90,
+                          showTitle: false),
+                      PieChartSectionData(
+                          value: categoryWiseExpense["Salary"],
+                          color: Colors.blue,
+                          radius: 90,
+                          showTitle: false)
+                    ])),
+                  ),
+                  Container(
+                    width: 350,
+                    child: PieChart(PieChartData(centerSpaceRadius: 45, sections: [
+                      PieChartSectionData(
+                          value: categoryWiseIncome["Food"],
+                          color: Colors.purple,
+                          radius: 90,
+                          showTitle: false),
+                      PieChartSectionData(
+                          value: categoryWiseIncome["Transport"],
+                          color: Colors.amber,
+                          radius: 90,
+                          showTitle: false),
+                      PieChartSectionData(
+                          value: categoryWiseIncome["Personal"],
+                          color: Colors.green,
+                          radius: 90,
+                          showTitle: false),
+                      PieChartSectionData(
+                          value: categoryWiseIncome["Shopping"],
+                          color: Colors.red,
+                          radius: 90,
+                          showTitle: false),
+                      PieChartSectionData(
+                          value: categoryWiseIncome["Rent"],
+                          color: Colors.orange,
+                          radius: 90,
+                          showTitle: false),
+                      PieChartSectionData(
+                          value: categoryWiseIncome["Medical"],
+                          color: Colors.pink,
+                          radius: 90,
+                          showTitle: false),
+                      PieChartSectionData(
+                          value: categoryWiseIncome["Movie"],
+                          color: Colors.yellow,
+                          radius: 90,
+                          showTitle: false),
+                      PieChartSectionData(
+                          value: categoryWiseIncome["Salary"],
+                          color: Colors.blue,
+                          radius: 90,
+                          showTitle: false)
+                    ])),
+                  )
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("<- Expenses",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black)),
+                Text("Income ->",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black)),
+              ],
             ),
             Divider(color: Colors.black),
             Text("Food",
@@ -116,47 +189,3 @@ class _StatisticsPageState extends State<StatisticsPage> {
     );
   }
 }
-
-var categories = [
-  "Food",
-  "Transport",
-  "Personal",
-  "Shopping",
-  "Medical",
-  "Rent",
-  "Movie",
-  "Salary"
-];
-
-void updateValueHelper() async {
-  await updateValues();
-}
-
-Future<void> updateValues() async {
-  await FirebaseFirestore.instance.collection("transactions").get().then(
-    (querySnapshot) {
-      for (var docSnapshot in querySnapshot.docs) {
-        categoryWiseExpense[docSnapshot['desc_short']] =
-            (categoryWiseExpense[docSnapshot['desc_short']] ??
-                0.0 + docSnapshot['amount']);
-      }
-    },
-  );
-}
-
-void resetValues() {
-  for (var category in categories) {
-    categoryWiseExpense[category] = 0;
-  }
-}
-
-Map<String, double> categoryWiseExpense = {
-  "Food": 0.0,
-  "Transport": 0.0,
-  "Personal": 0,
-  "Shopping": 0,
-  "Medical": 0,
-  "Rent": 0,
-  "Movie": 0,
-  "Salary": 0
-};

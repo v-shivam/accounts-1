@@ -24,13 +24,6 @@ class TransactionWidget extends StatelessWidget {
   }
 }
 
-TransactionWidget Transaction1 =
-    TransactionWidget(isIncrease: true, amount: 500, specification: "Food");
-TransactionWidget Transaction2 =
-    TransactionWidget(isIncrease: false, amount: 500, specification: "Food");
-TransactionWidget Transaction3 =
-    TransactionWidget(isIncrease: true, amount: 500, specification: "Food");
-
 class TransactionDetail extends StatelessWidget {
   bool? isSpent;
   int? amount;
@@ -70,22 +63,3 @@ class TransactionDetail extends StatelessWidget {
     );
   }
 }
-
-TransactionDetail TransactionD1 = TransactionDetail(
-    isSpent: true,
-    amount: 5000,
-    specification: "Food",
-    detail: "McPoli",
-    date: "15/06/2023");
-TransactionDetail TransactionD2 = TransactionDetail(
-    isSpent: true,
-    amount: 5000,
-    specification: "Food",
-    detail: "McPoli",
-    date: "15/06/2023");
-TransactionDetail TransactionD3 = TransactionDetail(
-    isSpent: true,
-    amount: 5000,
-    specification: "Food",
-    detail: "McPoli",
-    date: "15/06/2023");

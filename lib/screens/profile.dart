@@ -31,6 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
               children: [
                 Expanded(
                   child: CircleAvatar(
+                    child: Icon(Icons.person, size : 80),
                     radius: 65.0,
                   ),
                 ),

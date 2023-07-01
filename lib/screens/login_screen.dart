@@ -1,4 +1,5 @@
 import 'package:accounts/screens/sign_up_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:accounts/components/buttons.dart';
 import 'package:accounts/components/text_form_field.dart';
@@ -18,6 +19,8 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
+
+    final db = FirebaseFirestore.instance;
     return Scaffold(
       backgroundColor: Color(0xFFFFF6E5),
       body: SingleChildScrollView(
@@ -53,16 +56,13 @@ class _SignInPageState extends State<SignInPage> {
             SizedBox(
               height: 20,
             ),
-            Hero(
-              tag: "LOGIN",
-              child: Button(
-                text: "Login",
-                action: () async {
-                  await signIn(auth, userEmail.text, userPassword.text);
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => HomePage()));
-                },
-              ),
+            Button(
+              text: "Login",
+              action: () async {
+                await signIn(auth, userEmail.text, userPassword.text);
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => HomePage()));
+              },
             ),
             SizedBox(height: 20.0),
             Row(

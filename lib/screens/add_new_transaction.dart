@@ -1,3 +1,4 @@
+import 'package:accounts/screens/statistics.dart';
 import 'package:flutter/material.dart';
 import 'package:accounts/components/text_form_field.dart';
 import 'package:accounts/components/buttons.dart';
@@ -5,6 +6,7 @@ import 'home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:accounts/components/constants.dart';
 
 class NewTransactions extends StatefulWidget {
   const NewTransactions({super.key});
@@ -19,11 +21,14 @@ class _NewTransactionsState extends State<NewTransactions> {
   TextEditingController amount = TextEditingController();
   String _category = "Food";
 
+
   @override
   Widget build(BuildContext context) {
     final db = FirebaseFirestore.instance;
     DateTime dateToday =new DateTime.now();
     String date = dateToday.toString().substring(0,10);
+    final auth = FirebaseAuth.instance;
+    String email = auth.currentUser!.email!;
 
     return Scaffold(
       backgroundColor: Color(0xFFFFF6E5),
@@ -105,26 +110,27 @@ class _NewTransactionsState extends State<NewTransactions> {
                   'is_spent' : isSelected[0],
                   'date' : date,
                 };
-                await db.collection("transactions").add(transaction);
+                await db.collection("users").doc(email).collection("transactions").add(transaction);
 
                 if(isSelected[0]) {
-                  var netExpenseRef = db.collection('net_expenses').doc(
+                  var netExpenseRef = db.collection("users").doc(email).collection('net_expenses').doc(
                       'expense');
                   await netExpenseRef.update(
                     {"amount": FieldValue.increment(double.parse(amount.text))},
                   );
-                  var netBalanceRef = db.collection('net_expenses').doc('balance');
+                  var netBalanceRef = db.collection("users").doc(email).collection('net_expenses').doc('balance');
                   await netBalanceRef.update( {"amount": FieldValue.increment(-double.parse(amount.text))},);
                 }else{
-                  var netIncomeRef = db.collection('net_expenses').doc(
+                  var netIncomeRef = db.collection("users").doc(email).collection('net_expenses').doc(
                       'income');
-                  var netBalanceRef = db.collection('net_expenses').doc('balance');
+                  var netBalanceRef = db.collection("users").doc(email).collection('net_expenses').doc('balance');
                   await netIncomeRef.update(
                     {"amount": FieldValue.increment(double.parse(amount.text))},
                   );
                   await netBalanceRef.update( {"amount": FieldValue.increment(double.parse(amount.text))},);
                 }
-
+                resetValues();
+                resetIncomeValues();
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => HomePage()));
               },
@@ -136,35 +142,3 @@ class _NewTransactionsState extends State<NewTransactions> {
     );
   }
 }
-
-const List<Widget> options = <Widget>[
-  Padding(
-    padding: EdgeInsets.all(8.0),
-    child: Text("Expense",
-        style: TextStyle(
-            fontSize: 20, fontWeight: FontWeight.w700, color: Colors.red)),
-  ),
-  Padding(
-    padding: EdgeInsets.all(8.0),
-    child: Text("Income",
-        style: TextStyle(
-            fontSize: 20, fontWeight: FontWeight.w700, color: Colors.green)),
-  )
-];
-
-List<bool> isSelected = <bool>[
-  false,
-  false,
-];
-
-
-var categories = [
-  "Food",
-  "Transport",
-  "Personal",
-  "Shopping",
-  "Medical",
-  "Rent",
-  "Movie",
-  "Salary"
-];

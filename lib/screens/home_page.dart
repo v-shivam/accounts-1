@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:accounts/components/constants.dart';
+import 'package:accounts/screens/statistics.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,6 +20,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    // TODO: implement
+    updateValues();
+    updateValuesIncome();
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     final auth = FirebaseAuth.instance;
     final db = FirebaseFirestore.instance;
@@ -83,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                       style:
                           TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
                   FutureBuilder(
-                    future:  db
+                    future:  db.collection('users').doc(email)
                         .collection('net_expenses')
                         .doc('balance')
                         .get(),
@@ -114,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         child: Center(
                           child: FutureBuilder(
-                              future:  db
+                              future:  db.collection('users').doc(email)
                                   .collection('net_expenses')
                                   .doc('income')
                                   .get(),
@@ -143,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         child: Center(
                           child: FutureBuilder(
-                              future:  db
+                              future:  db.collection('users').doc(email)
                                   .collection('net_expenses')
                                   .doc('expense')
                                   .get(),
@@ -202,7 +211,7 @@ class _HomePageState extends State<HomePage> {
               removeTop: true,
               child: Material(
                 child: StreamBuilder(
-                  stream: FirebaseFirestore.instance.collection("transactions").where('date',isEqualTo: date).snapshots(),
+                  stream: FirebaseFirestore.instance.collection('users').doc(email).collection("transactions").where('date',isEqualTo: date).snapshots(),
                   builder:
                       (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasError) {
