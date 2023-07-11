@@ -1,9 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:accounts/components/constants.dart';
 
 class StatisticsPage extends StatefulWidget {
@@ -19,22 +16,22 @@ class _StatisticsPageState extends State<StatisticsPage> {
     final auth = FirebaseAuth.instance;
     String email = auth.currentUser!.email!;
     return Scaffold(
-      backgroundColor: Color(0xFFFFF6E5),
+      backgroundColor: const Color(0xFFFFF6E5),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
         child: Column(
           children: [
-            Container(
+            const SizedBox(
               height: 50,
               child: Text("Statistics",
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700)),
             ),
-            Container(
+            SizedBox(
               height: 400,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 350,
                     child: PieChart(PieChartData(centerSpaceRadius: 45, sections: [
                       PieChartSectionData(
@@ -79,7 +76,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                           showTitle: false)
                     ])),
                   ),
-                  Container(
+                  SizedBox(
                     width: 350,
                     child: PieChart(PieChartData(centerSpaceRadius: 45, sections: [
                       PieChartSectionData(
@@ -127,7 +124,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                 ],
               ),
             ),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("<- Expenses",
@@ -142,43 +139,43 @@ class _StatisticsPageState extends State<StatisticsPage> {
                         color: Colors.black)),
               ],
             ),
-            Divider(color: Colors.black),
-            Text("Food",
+            const Divider(color: Colors.black),
+            const Text("Food",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                     color: Colors.purple)),
-            Text("Transport",
+            const Text("Transport",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                     color: Colors.amber)),
-            Text("Personal",
+            const Text("Personal",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                     color: Colors.green)),
-            Text("Shopping",
+            const Text("Shopping",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                     color: Colors.red)),
-            Text("Rent",
+            const Text("Rent",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                     color: Colors.orange)),
-            Text("Medical",
+            const Text("Medical",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                     color: Colors.pinkAccent)),
-            Text("Movie",
+            const Text("Movie",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                     color: Colors.yellow)),
-            Text("Salary",
+            const Text("Salary",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,

@@ -1,15 +1,9 @@
-import 'package:accounts/screens/all_transactions_screen.dart';
-import 'package:accounts/screens/home_page.dart';
-import 'package:accounts/screens/profile.dart';
-import 'package:accounts/screens/statistics.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:accounts/screens/statistics.dart';
 
 var optionsForTransactions = ["This Week", "This Month", "This Year"];
-DateTime dateToday = new DateTime.now();
+DateTime dateToday = DateTime.now();
 
 DateTime firstDayOfWeek(DateTime date) =>
     DateTime(date.year, date.month, date.day - date.weekday % 7);

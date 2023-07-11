@@ -5,7 +5,6 @@ import 'login_screen.dart';
 import 'package:accounts/screens/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:accounts/components/firebase_functions.dart';
 
 final auth = FirebaseAuth.instance;
@@ -14,7 +13,7 @@ TextEditingController userEmail = TextEditingController();
 TextEditingController userPassword = TextEditingController();
 TextEditingController confirmUserPassword = TextEditingController();
 TextEditingController userName = TextEditingController();
-DateTime dateToday =new DateTime.now();
+DateTime dateToday =DateTime.now();
 String date = dateToday.toString().substring(0,10);
 
 class SignUpPage extends StatefulWidget {
@@ -29,12 +28,12 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Color(0xFFFFF6E5),
+      backgroundColor: const Color(0xFFFFF6E5),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 90,
             ),
             const SizedBox(
@@ -47,7 +46,7 @@ class _SignUpPageState extends State<SignUpPage> {
               prefixIcon: Icons.person,
               inputType: TextInputType.text,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             CustomTextFormField(
@@ -57,12 +56,12 @@ class _SignUpPageState extends State<SignUpPage> {
               prefixIcon: Icons.email_outlined,
               inputType: TextInputType.emailAddress,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             TextFormField(
               controller: userPassword,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.password),
                 labelText: "Password",
                 hintText: "Enter Password",
@@ -71,12 +70,12 @@ class _SignUpPageState extends State<SignUpPage> {
               obscureText: true,
               keyboardType: TextInputType.visiblePassword,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             TextFormField(
               controller: confirmUserPassword,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.password),
                 labelText: "Confirm Password",
                 hintText: "Confirm Password",
@@ -85,7 +84,7 @@ class _SignUpPageState extends State<SignUpPage> {
               obscureText: true,
               keyboardType: TextInputType.visiblePassword,
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Button(
@@ -93,23 +92,23 @@ class _SignUpPageState extends State<SignUpPage> {
               action: () async {
                 await signUp(auth, userEmail.text, userPassword.text);
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => HomePage()));
+                    MaterialPageRoute(builder: (context) => const HomePage()));
               },
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Have an account ?", style: TextStyle(fontSize: 15)),
+                const Text("Have an account ?", style: TextStyle(fontSize: 15)),
                 TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SignInPage()));
+                              builder: (context) => const SignInPage()));
                     },
-                    child: Text("Sign In !")),
+                    child: const Text("Sign In !")),
               ],
             )
           ],

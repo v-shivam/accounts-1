@@ -22,12 +22,12 @@ class _SignInPageState extends State<SignInPage> {
 
     final db = FirebaseFirestore.instance;
     return Scaffold(
-      backgroundColor: Color(0xFFFFF6E5),
+      backgroundColor: const Color(0xFFFFF6E5),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 140,
             ),
             const SizedBox(
@@ -39,12 +39,12 @@ class _SignInPageState extends State<SignInPage> {
                 labelText: "Email",
                 inputType: TextInputType.emailAddress,
                 prefixIcon: Icons.email_outlined),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             TextFormField(
               controller: userPassword,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.password),
                 labelText: "Password",
                 hintText: "Enter Password",
@@ -53,7 +53,7 @@ class _SignInPageState extends State<SignInPage> {
               obscureText: true,
               keyboardType: TextInputType.visiblePassword,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Button(
@@ -61,14 +61,14 @@ class _SignInPageState extends State<SignInPage> {
               action: () async {
                 await signIn(auth, userEmail.text, userPassword.text);
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => HomePage()));
+                    MaterialPageRoute(builder: (context) => const HomePage()));
               },
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Don\'t have an account ?",
+                const Text("Don't have an account ?",
                     style: TextStyle(fontSize: 15)),
                 TextButton(
                     onPressed: () {
@@ -76,9 +76,9 @@ class _SignInPageState extends State<SignInPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SignUpPage()));
+                              builder: (context) => const SignUpPage()));
                     },
-                    child: Text("Sign Up !")),
+                    child: const Text("Sign Up !")),
               ],
             )
           ],

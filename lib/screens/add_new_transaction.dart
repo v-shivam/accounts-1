@@ -1,11 +1,9 @@
-import 'package:accounts/screens/statistics.dart';
 import 'package:flutter/material.dart';
 import 'package:accounts/components/text_form_field.dart';
 import 'package:accounts/components/buttons.dart';
 import 'home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:accounts/components/constants.dart';
 
 class NewTransactions extends StatefulWidget {
@@ -25,30 +23,30 @@ class _NewTransactionsState extends State<NewTransactions> {
   @override
   Widget build(BuildContext context) {
     final db = FirebaseFirestore.instance;
-    DateTime dateToday =new DateTime.now();
+    DateTime dateToday =DateTime.now();
     String date = dateToday.toString().substring(0,10);
     final auth = FirebaseAuth.instance;
     String email = auth.currentUser!.email!;
 
     return Scaffold(
-      backgroundColor: Color(0xFFFFF6E5),
+      backgroundColor: const Color(0xFFFFF6E5),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 140,
             ),
             const SizedBox(
               height: 70,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             DropdownButton(
-              dropdownColor: Color(0xFFFFF6E5),
+              dropdownColor: const Color(0xFFFFF6E5),
               items: categories.map((String category) {
-                return new DropdownMenuItem(
+                return DropdownMenuItem(
                     value: category,
-                    child: SizedBox(width: 250,child: Text(category, style: TextStyle(fontSize: 22)))
+                    child: SizedBox(width: 250,child: Text(category, style: const TextStyle(fontSize: 22)))
                 );
               }).toList(),
               onChanged: (newValue) {
@@ -57,7 +55,7 @@ class _NewTransactionsState extends State<NewTransactions> {
               },
               value: _category,
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             CustomTextFormField(
@@ -66,7 +64,7 @@ class _NewTransactionsState extends State<NewTransactions> {
               hintText: "Enter Description",
               inputType: TextInputType.text,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             CustomTextFormField(
@@ -75,11 +73,10 @@ class _NewTransactionsState extends State<NewTransactions> {
               labelText: "Amount",
               inputType: TextInputType.number,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             ToggleButtons(
-              children: options,
               isSelected: isSelected,
               selectedColor: Colors.black,
               splashColor: Colors.white,
@@ -96,8 +93,9 @@ class _NewTransactionsState extends State<NewTransactions> {
                   }
                 });
               },
+              children: options,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Button(
@@ -132,10 +130,10 @@ class _NewTransactionsState extends State<NewTransactions> {
                 resetValues();
                 resetIncomeValues();
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => HomePage()));
+                    MaterialPageRoute(builder: (context) => const HomePage()));
               },
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
           ],
         ),
       ),
