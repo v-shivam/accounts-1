@@ -4,7 +4,7 @@ class Button extends StatelessWidget {
   String? text;
   Function? action;
 
-  Button({this.text, this.action});
+  Button({super.key, this.text, this.action});
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +16,11 @@ class Button extends StatelessWidget {
               if (action != null) {
                 action!();
               }
-              ;
             },
             style: ElevatedButton.styleFrom(
-              primary: Colors.black,
-              onPrimary: Colors.white,
+              foregroundColor: Colors.white, backgroundColor: Colors.black,
               elevation: 3,
             ),
-            child: Text(text!, style: TextStyle(fontSize: 20))));
+            child: Text(text!, style: const TextStyle(fontSize: 20))));
   }
 }

@@ -8,7 +8,7 @@ class CustomTextFormField extends StatefulWidget {
   TextInputType? inputType;
 
   CustomTextFormField(
-      {this.controller,
+      {super.key, this.controller,
       this.hintText,
       this.labelText,
       this.prefixIcon,
@@ -27,7 +27,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         prefixIcon: Icon(widget.prefixIcon),
         labelText: widget.labelText!,
         hintText: widget.hintText!,
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
       ),
       keyboardType: widget.inputType!,
     );

@@ -1,11 +1,8 @@
 import 'package:accounts/components/buttons.dart';
 import 'package:accounts/main.dart';
-import 'package:accounts/screens/login_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -22,17 +19,17 @@ class _ProfilePageState extends State<ProfilePage> {
 
     String email = auth.currentUser!.email!;
     return Scaffold(
-      backgroundColor: Color(0xFFFFF6E5),
+      backgroundColor: const Color(0xFFFFF6E5),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(20, 100, 20, 40),
         child: Column(
           children: [
             Row(
               children: [
-                Expanded(
+                const Expanded(
                   child: CircleAvatar(
-                    child: Icon(Icons.person, size : 80),
                     radius: 65.0,
+                    child: Icon(Icons.person, size : 80),
                   ),
                 ),
                 Expanded(
@@ -44,10 +41,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return Text(snapshot.data!['user_name'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 30, fontWeight: FontWeight.w700));
                         } else {
-                          return Text("Loading...",
+                          return const Text("Loading...",
                               style: TextStyle(
                                   fontSize: 30, fontWeight: FontWeight.w700));
                         }
@@ -62,7 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 action: () async {
                   await auth.signOut();
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => MyApp()));
+                      MaterialPageRoute(builder: (context) => const MyApp()));
                 },
               ),
             ),

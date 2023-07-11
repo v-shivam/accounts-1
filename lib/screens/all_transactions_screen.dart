@@ -1,9 +1,7 @@
 import 'package:accounts/components/transaction_widget.dart';
-import 'package:accounts/screens/add_new_transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:accounts/components/constants.dart';
 
 class AllTransactionsPage extends StatefulWidget {
@@ -23,26 +21,26 @@ class _AllTransactionsPageState extends State<AllTransactionsPage> {
     String email = auth.currentUser!.email!;
 
     return Scaffold(
-      backgroundColor: Color(0xFFFFF6E5),
+      backgroundColor: const Color(0xFFFFF6E5),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(10, 40, 10, 40),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
               child: Text("Transactions",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
             ),
             SizedBox(
               height: 30,
               child: DropdownButton(
-                dropdownColor: Color(0xFFFFF6E5),
+                dropdownColor: const Color(0xFFFFF6E5),
                 items: optionsForTransactions.map((String option) {
-                  return new DropdownMenuItem(
+                  return DropdownMenuItem(
                       value: option,
                       child: SizedBox(
                           width: 250,
-                          child: Text(option, style: TextStyle(fontSize: 15))));
+                          child: Text(option, style: const TextStyle(fontSize: 15))));
                 }).toList(),
                 onChanged: (newValue) {
                   // do other stuff with _category
@@ -52,7 +50,7 @@ class _AllTransactionsPageState extends State<AllTransactionsPage> {
                 value: _option,
               ),
             ),
-            Container(
+            SizedBox(
               height: 600,
               child: MediaQuery.removePadding(
                 context: context,
@@ -67,14 +65,14 @@ class _AllTransactionsPageState extends State<AllTransactionsPage> {
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasError) {
-                      return Text('Something went wrong');
+                      return const Text('Something went wrong');
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Text("Loading");
+                      return const Text("Loading");
                     }
 
                     if (!snapshot.hasData) {
-                      return Text("Loading");
+                      return const Text("Loading");
                     }
 
                     return ListView(

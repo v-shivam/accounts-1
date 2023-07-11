@@ -6,7 +6,7 @@ class TransactionWidget extends StatelessWidget {
   String? specification;
 
   TransactionWidget(
-      {required this.isIncrease,
+      {super.key, required this.isIncrease,
       required this.amount,
       required this.specification});
 
@@ -15,8 +15,8 @@ class TransactionWidget extends StatelessWidget {
     return Card(
       child: ListTile(
         leading: isIncrease!
-            ? Icon(Icons.arrow_circle_up, color: Colors.green)
-            : Icon(Icons.arrow_circle_down, color: Colors.red),
+            ? const Icon(Icons.arrow_circle_up, color: Colors.green)
+            : const Icon(Icons.arrow_circle_down, color: Colors.red),
         title: Text(amount!.toString()),
         subtitle: Text(specification!),
       ),
@@ -32,7 +32,7 @@ class TransactionDetail extends StatelessWidget {
   String? date;
 
   TransactionDetail(
-      {required this.isSpent,
+      {super.key, required this.isSpent,
       required this.amount,
       required this.specification,
       required this.detail,
@@ -45,17 +45,17 @@ class TransactionDetail extends StatelessWidget {
         title: Text(specification!),
         subtitle: Text(detail!),
         trailing: RichText(
-          text: new TextSpan(
-            style: new TextStyle(
+          text: TextSpan(
+            style: const TextStyle(
               fontSize: 14.0,
               color: Colors.black,
             ),
             children: <TextSpan>[
-              new TextSpan(
+              TextSpan(
                   text: amount.toString(),
                   style:
                       TextStyle(color: isSpent! ? Colors.red : Colors.green)),
-              new TextSpan(text: '\n\n' + date!),
+              TextSpan(text: '\n\n${date!}'),
             ],
           ),
         ),
