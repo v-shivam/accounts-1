@@ -19,6 +19,12 @@ Flutter for developing the app UI.
 [Firebase Firestore](https://firebase.google.com/docs/firestore) for storing all the transactions.  
 [fl_chart](https://pub.dev/packages/fl_chart) for statistics of the transactions in form of graphs.
 
+### Screenshots
+
+![Main Page](https://github.com/Sairaj-G/Hisaab/blob/master/MainPage.jpg)
+![Statistics](https://github.com/Sairaj-G/Hisaab/blob/master/StatisticsPage.jpg)
+![Transactions](https://github.com/Sairaj-G/Hisaab/blob/master/TransactionsPage.jpg)
+
 
 
 
