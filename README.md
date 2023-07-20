@@ -26,5 +26,10 @@ Flutter for developing the app UI.
 ![Transactions](https://github.com/Sairaj-G/Hisaab/blob/master/TransactionsPage.jpg)
 
 
+### Contributors
+
+- [Sairaj Ghosarwadkar](https://github.com/Sairaj-G)
+- [Shivam Vishwakarma](https://github.com/v-shivam)
+
 
 
