@@ -21,9 +21,21 @@ Flutter for developing the app UI.
 
 ### Screenshots
 
-![Main Page](https://github.com/Sairaj-G/Hisaab/blob/master/MainPage.jpg)
-![Statistics](https://github.com/Sairaj-G/Hisaab/blob/master/StatisticsPage.jpg)
-![Transactions](https://github.com/Sairaj-G/Hisaab/blob/master/TransactionsPage.jpg)
+<div class="row">
+  <img width="400" src="https://github.com/v-shivam/accounts-1/assets/136485630/a9a218b1-f5f7-4cc4-b2b6-209e2552ea27">
+</div>
+
+<div class="row">
+  <img width="400" src="https://github.com/v-shivam/accounts-1/assets/136485630/3211dfee-d713-4960-b932-cb3a733f2f14">
+</div>
+
+<div class="row">
+  <img width="400" src="https://github.com/v-shivam/accounts-1/assets/136485630/e98944f7-36c2-4d9e-91c6-0b29a249d9e5">
+</div>
+
+<div class="row">
+  <img width="400" src="https://github.com/v-shivam/accounts-1/assets/136485630/100bf718-a9e8-4e3a-a198-132fe536567a">
+</div>
 
 
 ### Contributors
